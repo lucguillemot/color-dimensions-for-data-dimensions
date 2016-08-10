@@ -1,0 +1,108 @@
+body {
+  font-size: 12px;
+}
+
+.top-buffer { margin-top:20px; }
+
+
+
+.var-label, .cl-label {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+path.tracts {
+  fill: #efefef;
+  fill-opacity: .9;
+  border-radius: 25px;
+  stroke: #fff !important;
+  //stroke: #111138 !important;
+  stroke-width: .1px !important;
+}
+
+path.tracts:hover {
+    fill-opacity: 0.2 !important;
+    stroke: #fff !important;
+    stroke-width: 1.5px !important;
+}
+
+svg.cluster-dist {
+  width: 555px;
+  height: 555px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+svg.force {
+  //width: 500px;
+  //height: 500px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.force-circle {
+  fill: #000;
+  stroke: #fff;
+  stroke-width: .7px;
+  cursor: move;
+}
+
+.links line {
+  stroke: #ccc;
+  stroke-width: .1px;
+}
+
+.force-labels {
+  font-size: 10px;
+  fill: #fff;
+  cursor: move;
+  dominant-baseline: central;
+  text-anchor: middle;
+}
+
+
+
+.cl-circle {
+  //stroke: #000;
+  stroke-width: .1px;
+  cursor: move;
+}
+
+
+
+.cl-1 {fill: #8dd3c7;}
+.cl-2 {fill: #fb8072;}
+.cl-3 {fill: #bebada;}
+.cl-4 {fill: #ffffb3;}
+.cl-5 {fill: #80b1d3;}
+.cl-6 {fill: #fdb462;}
+.cl-7 {fill: #b3de69;}
+.cl-8 {fill: #fccde5;}
+.cl-9 {fill: #d9d9d9;}
+.cl-10 {fill: #bc80bd;}
+.cl-11 {fill: #ccebc5;}
+.cl-12 {fill: #dedede;}
+.cl-13 {fill: #ffed6f;}
+.cl-14 {fill: #e0f3f8;}
+.cl-15 {fill: #ffa696;}
+
+.axis {
+  font: 9px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+}
+
+.tick > text {
+  fill: #ccc;
+}
+
+.label{
+  cursor: pointer;
+}

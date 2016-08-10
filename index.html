@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Working with colors and multidimensional data</title>
+	<!-- JQuery -->
+	<script src="layout/jquery-2.2.0.min.js"></script>
+	<!-- Bootstrap -->
+	<link href="layout/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="layout/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+	<!-- leaflet -->
+	<!--     <link rel="stylesheet" href="layout/leaflet-0.7.3/leaflet.css" />
+	<script src="layout/leaflet-0.7.3/leaflet.js"></script> -->
+	<!-- d3 and plugins -->
+	<script src="layout/d3/d3.v4.js"></script>
+	<script src="layout/plot.js"></script>
+	<script src="layout/geo.js"></script>
+	<script src="layout/color.js"></script>
+	<script src="layout/chroma.min.js"></script>
+
+	<!-- custom css -->
+	<link rel="stylesheet" href="layout/css/main.css" />
+
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<h1>Colors Dimensions for Data Dimensions<br><small>Working with colors and multidimensional data</small></h1>
+			</div>
+			<div class="col-xs-3"></div>
+		</div> <!-- end of row -->
+
+		<div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<p>How can colors be used to unravel spatiotemporal patterns in a multivariate geographical space? Perceptually consistent color spaces such as L*a*b* or L*c*h* are well defined, but their use in qualitative cartography is still relatively rare. Furthermore, qualitative color palettes are often randomly selected and do not relate the distance between colors to degrees of difference between categories depicted on the map. This study presents a tool allowing to select colors and automatically connect them to a multivariate space. It is applied to a geodemographic map of the San Francisco Bay Area where colors for 15 clusters can be algorithmically selected to reflect similarities  between clusters in the attribute space or to maximize contrast between spatially contiguous clusters. This study shows that careful consideration of a color palette and its relation to the mapped data space can assist in the visualization of complex spatiotemporal patterns.</p>
+			</div>
+			<div class="col-xs-3"></div>
+		</div> <!-- end of row -->
+		<div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<h3>ColorBrewer colors</h3>
+			</div>
+			<div class="col-xs-3"></div>
+		</div> <!-- end of row -->
+		<div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-7"><div id="map"></div></div>
+			<div class="col-xs-3"></div>
+		</div> <!-- end of row -->
+		<!-- <div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<p>The social landscape of the Bay Area is changing very rapidly. The debate surrounding gentrification in the Bay Area is a cue to how contentious the issue of neighborhood change is. For a long time, the dichotomy between urban and suburban areas was relevant in describing US neighborhoods. City centers were decaying while suburban areas were getting wealthier and, often, whiter. The “white flight” is now over and, today, city centers are getting more and more attractive, when suburban areas are getting more diverse.</p>
+			</div>
+			<div class="col-xs-3"></div>
+		</div> --> <!-- end of row -->
+		<!-- <div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<p>The set of selected variables is organized in 5 categories covering different aspect of social life: education, family types, population characteristics, type of housing, built environment, economic features.</p>
+        		<p>Out of these raw variables, a bottom-up algorithm is used to create clusters of similar tracts. The used algorithm is called hierarchical clustering and uses the complete linkage feature on an euclidean distance matrix. The algorithm calculates the distance between every tract one with each other on a multifactorial space. Each tract is its own cluster in the beginning. The first cycle agglomerates the two closest tracts to a new cluster. The second cycle agglomerates the two closest clusters and so forth until there is only one cluster left. The dendrogram below graphically displays how each tract gradually agglomerate with its most similar counterpart. The dendrogram is a very convenient tool to decide the number of clusters that produces a meaningful “cut” in the clustering process. The dendrogram here is colored according to the 15 clusters depicted on the map above.</p>
+			</div>
+			<div class="col-xs-3"></div>
+		</div> --> <!-- end of row -->
+		<div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<h3>Principal Component Analysis</h3>
+			</div>
+			<div class="col-xs-3"></div>
+		</div> <!-- end of row -->
+		<div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<div id="pca1">
+					<img src="img/plot.png" width="555px">
+				</div>
+			</div>
+			<div class="col-xs-3"></div>
+		</div> <!-- end of row -->
+		<!-- <div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<p>“For nominal data, objects should be distinguishably different, but since the data themselves are not ordered, there should be no perceptual ordering in the representation.”</p>
+				<p>“In interval data, equal steps in data value should appear as steps of equal perceived magnitude in the representation.”</p>
+			</div>
+			<div class="col-xs-3"></div>
+		</div> --> <!-- end of row -->
+		<div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<h3>The L*a*b* Color Space</h3>
+			</div>
+			<div class="col-xs-3"></div>
+		</div> <!-- end of row -->
+		<div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6"><div id="colorSpace1"></div></div>
+			<div class="col-xs-3"></div>
+		</div> <!-- end of row -->
+		<div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<h3>PCA on L*a*b*</h3>
+			</div>
+			<div class="col-xs-3"></div>
+		</div> <!-- end of row -->
+		<div class="row top-buffer">
+			<div class="col-xs-8"><div id="pcaMap"></div></div>
+			<div class="col-xs-4"><div id="pca2"></div></div>
+		</div> <!-- end of row -->
+		<div class="row top-buffer">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-6">
+				<h3>Force Layout on Clusters</h3>
+			</div>
+			<div class="col-xs-3"></div>
+		</div> <!-- end of row -->
+		<div class="row top-buffer">
+			<div class="col-xs-8"><div id="forceMap"></div></div>
+			<div class="col-xs-4"><div id="force1"></div></div>
+		</div> <!-- end of row -->
+		
+	</div>
+
+	<script>
+		/*var brewerColors = ['#8dd3c7','#fb8072','#bebada','#ffffb3','#80b1d3','#fdb462','#b3de69','#fccde5','#d9d9d9','#bc80bd','#ccebc5', '#dedede', '#ffed6f', '#e0f3f8', '#ffa696'];*/
+		var currentXPC = "PC1",
+			currentYPC = "PC2";
+
+		var clusterById = {},
+			pca1ById = {},
+			pca2ById = {},
+			pca3ById = {},
+			xById = {},
+			yById = {},
+			currentColor = "",
+			currentCluster = "";
+
+		var L = 60;
+
+		var w3 = 262.5,
+			w4 = 360,
+			w5 = 457.5,
+			w6 = 555,
+			w7 = 622,
+			w8 = 750;
+
+		 var t = d3.transition().duration(1000);
+
+		// map
+		d3.queue()
+			.defer(d3.json, "geo/sfbact_2014.json")
+			.defer(d3.csv, "data/pca2014.csv")
+			.await(function(error, t, c) {
+				displayMap(t, c, "#map", w6, 300, "cb", "tracts tracts-cb");
+			});
+
+		/*d3.csv("data/pca2014.csv", function(data) {
+			displayPca(data, "#pca1", w5, w5, {top: 20, right: 20, bottom: 30, left: 40}, "cb", 1.5, "1")
+		});*/
+
+		
+		displayLab("#colorSpace1", w3, w3);
+
+		// Map + PCA on tracts
+		d3.queue()
+			.defer(d3.json, "geo/sfbact_2014.json")
+			.defer(d3.csv, "data/pca2014.csv")
+			.await(function(error, t, c) {
+				displayMap(t, c, "#pcaMap", w8, w4, "lab", "tracts tracts-pca-lab");
+			});
+
+		d3.csv("data/pca2014.csv", function(data) {
+			displayPca(data, "#pca2", w4, w4, {top: 20, right: 20, bottom: 30, left: 40}, "lab", 1, "2")
+		});
+
+		// Map + Force Layout on clusters
+		d3.queue()
+			.defer(d3.json, "geo/sfbact_2014.json")
+			.defer(d3.csv, "data/pca2014.csv")
+			.await(function(error, t, c) {
+				displayMap(t, c, "#forceMap", w8, w4, "lab", "tracts tracts-force-lab");
+			});
+
+		displayLab("#force1", w4, w4);
+		d3.json("data/force.json", function(error, graph) {
+			if (error) throw error;
+			displayForce("#force1", graph, w4, w4, {top: 20, right: 20, bottom: 20, left: 20})
+		})
+
+		// 
+
+		/*function dragstarted(d) {
+			if (!d3.event.active) simulation.alphaTarget(0.3).restart()
+			simulation.fix(d);
+			update_map_color_space();
+		}
+
+		function dragged(d) {
+		  simulation.fix(d, d3.event.x, d3.event.y);
+		  update_map_color_space();
+		  
+		  // get mouse position and coordinates
+		  var x = d3.mouse(this)[0];
+		  var y = d3.mouse(this)[1];
+
+		  // get rgb values of canvas image at the mouse position
+		  //var p = context.getImageData(x, y, 1, 1).data; 
+		    //console.log("red = " + p[0] + " - green = " + p[1] + " - blue = " + p[2]);
+		  //currentColor = "rgb("+p[0]+","+p[1]+","+p[2]+")";
+		  // match the corresponding cluster tracts to the color of the dragged node
+		  //d3.selectAll("[cluster=cl"+(d.id)+"]").style("fill", currentColor);
+		}
+
+		function dragended(d) {
+		if (!d3.event.active) simulation.alphaTarget(0);
+		simulation.unfix(d);
+		update_map_color_space();
+		}*/
+		
+		
+		/*function update_map_color_space() {
+			var p = {};
+
+			// match the colors of tracts on the map to the position
+			// of their corresponding nodes in the color space.
+			d3.selectAll(".cl-circle").each(function(d, i){
+				var x = Math.round(s(d[0])),
+					y = Math.round(s(d[1]));
+				console.log("x = "+x+" - y = "+y);
+				p = context.getImageData(x, y, 1, 1).data;
+				console.log("rgb("+p[0]+","+p[1]+","+p[2]+")");
+				currentColor = "rgb("+p[0]+","+p[1]+","+p[2]+")";
+				console.log(i);
+				d3.selectAll("[cluster=cl"+(i+1)+"]").attr("fill", currentColor);
+		    });
+
+
+			d3.selectAll(".cl-circle").each(function(d, i){
+				
+				var x = Math.round(s(d));
+				//console.log(x);
+				//console.log(i+1);
+				p = context.getImageData(x, .5, 1, 1).data;
+				//console.log("rgb("+p[0]+","+p[1]+","+p[2]+")");
+				currentColor = "rgb("+p[0]+","+p[1]+","+p[2]+")";
+
+				d3.selectAll("[cluster=cl"+(i+1)+"]").attr("fill", currentColor);
+			});
+		}*/
+
+		/*function dragstarted(d) {
+			d3.select(this).raise().classed("active", true);
+			console.log("dragstarted");
+		}
+
+		function dragged(d) {
+			d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+			console.log("dragged");
+			var currentCluster = d3.select(this).attr("cluster-circle");
+			console.log(currentCluster);
+
+			var p = {};
+
+			console.log("d.x = "+d.x);
+
+			var x = Math.round(s(d));
+			//console.log(x);
+			//console.log(i+1);
+			p = context.getImageData(d.x, d.y, 1, 1).data;
+			console.log("rgb("+p[0]+","+p[1]+","+p[2]+")");
+			currentColor = "rgb("+p[0]+","+p[1]+","+p[2]+")";
+
+			d3.selectAll("[cluster="+currentCluster+"]").attr("fill", currentColor);
+		}
+
+		function dragended(d) {
+			d3.select(this).classed("active", false);
+			console.log("dragended");
+		}*/
+	</script>
+</body>
+</html>
